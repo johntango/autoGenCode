@@ -1,0 +1,6 @@
+{
+  "diff_summary": "Added a Python function to write 'Hello World' to a file.",
+  "code_snippets": [
+    "def write_hello_world(file_path):\n    with open(file_path, 'w') as file:\n        file.write('Hello World')"
+  ]
+}
