@@ -1,0 +1,6 @@
+{
+  "design_summary": "Create a basic Python script that defines a function `write_hello_world` to print the string 'Hello World'.",
+  "files_touched": [
+    "hello_world.py"
+  ]
+}
