@@ -1,0 +1,6 @@
+{
+  "design_summary": "Create a Python function named `write_greeting` that writes 'Hello CRazy' to a text file named 'greeting.txt'.",
+  "files_touched": [
+    "write_greeting.py"
+  ]
+}
