@@ -1,0 +1,6 @@
+{
+  "design_summary": "The task involves writing a simple Python function that prints 'Hello CRazy Bear'. The function will be added to a file named `greet.py`. The function will be named `print_greeting` and will use the `print()` function to output the desired string. No third-party libraries are required for this task, and the function will be straightforward, focusing solely on printing the text.",
+  "files_touched": [
+    "greet.py"
+  ]
+}
