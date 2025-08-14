@@ -1,0 +1,6 @@
+{
+  "diff_summary": "Created a function to write 'Hello CRazy' to a text file.",
+  "code_snippets": [
+    "def write_hello():\n    with open('output.txt', 'w') as file:\n        file.write('Hello CRazy')\n\nwrite_hello()"
+  ]
+}
