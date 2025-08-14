@@ -1,0 +1,6 @@
+{
+  "diff_summary": "Added a function to a Python file that writes 'Hello Dirty' to the console.",
+  "code_snippets": [
+    "def say_hello_dirty():\n    print('Hello Dirty')\n\n# Call the function\nsay_hello_dirty()"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "design_summary": "Create a Python function `write_hello_dirty()` that writes the string 'Hello Dirty' to a text file named `hello.txt`. The function should open the file in write mode, write the string, and close the file. This function will be added to a new Python script.",
+  "files_touched": [
+    "write_hello_dirty.py"
+  ]
+}
