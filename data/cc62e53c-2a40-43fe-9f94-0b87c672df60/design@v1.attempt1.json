@@ -1,6 +1,0 @@
-{
-  "design_summary": "The program will output the text \"Hello Eggggg\" when executed. It consists of a single Python script file. The script uses Python's built-in `print()` function to display the message. The extra 'g's in \"Eggggg\" are added directly to the string to achieve the desired output.",
-  "files_touched": [
-    "hello_eggggg.py"
-  ]
-}
