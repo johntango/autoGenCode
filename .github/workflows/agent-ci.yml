@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
     branches: [ "main" ]
     paths:
-      - "**/*.py"
-      - "tests/**"
+      - "generated/*/src/*.py"
+      - "generate/*/tests/*
 
 jobs:
   test:
