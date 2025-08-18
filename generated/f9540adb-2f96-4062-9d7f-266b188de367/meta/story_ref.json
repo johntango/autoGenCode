@@ -1,0 +1,6 @@
+{
+  "story_file": "story001.json",
+  "story_sha256": "4c9104e28a3a8af6121fd218cc4d3b63a7cd27d9e0c299bdbc83e212db6c0c61",
+  "written_at_utc": "2025-08-18T18:18:31.055092+00:00",
+  "note": "Pointer only; full story lives under meta/stories/<filename>.json and is published to repo generated/meta/stories/"
+}
