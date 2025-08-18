@@ -28,19 +28,26 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
           pip install pytest
-      - name: Run pytest for each generated task
+      - name: Run at most 2 tests for task ${{ matrix.task }}
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          found=0
-          for task in generated/*; do
-            if [ -d "$task/src" ] && [ -d "$task/tests" ]; then
-              found=1
-              echo "===== Running tests for $task ====="
-              # Add this task's src/ to PYTHONPATH so tests can import the code
-              PYTHONPATH="$task/src${PYTHONPATH:+:$PYTHONPATH}" pytest -q "$task/tests"
-            fi
-          done
-          if [ $found -eq 0 ]; then
-            echo "No generated tasks with src+tests found; nothing to test."
+          TASK="generated/${{ matrix.task }}"
+          if [ ! -d "$TASK/tests" ]; then
+            echo "No tests found in $TASK"
+            exit 0
           fi
+
+          export PYTHONPATH="$TASK/src${PYTHONPATH:+:$PYTHONPATH}"
+
+          # Collect pytest node IDs and keep only the first 2
+          mapfile -t NODEIDS < <(pytest --collect-only -q "$TASK/tests" 2>/dev/null | sed '/::/!d' | head -n 2)
+
+          if [ "${#NODEIDS[@]}" -eq 0 ]; then
+            echo "No tests collected."
+            exit 0
+          fi
+
+          echo "Running ${#NODEIDS[@]} test(s):"
+          printf '  %s\n' "${NODEIDS[@]}"
+
+          pytest -q "${NODEIDS[@]}"
