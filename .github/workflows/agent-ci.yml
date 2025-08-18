@@ -1,29 +1,46 @@
 name: agent-ci
+
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
     paths:
-      - "**/*.py"
-      - "tests/**"
-  workflow_dispatch:
-    branches: [ "main" ]
-    paths:
-      - "generated/*/src/*.py"
-      - "generated/*/tests/*
+      - "generated/**" # trigger when generated content changes
+      - ".github/workflows/agent-ci.yml"
+  workflow_dispatch: {} # manual run; no paths/branches filters supported
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # helpful if you later diff changed tasks
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
           pip install pytest
-      - name: Run tests
-        run: pytest -q
+      - name: Run pytest for each generated task
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          found=0
+          for task in generated/*; do
+            if [ -d "$task/src" ] && [ -d "$task/tests" ]; then
+              found=1
+              echo "===== Running tests for $task ====="
+              # Add this task's src/ to PYTHONPATH so tests can import the code
+              PYTHONPATH="$task/src${PYTHONPATH:+:$PYTHONPATH}" pytest -q "$task/tests"
+            fi
+          done
+          if [ $found -eq 0 ]; then
+            echo "No generated tasks with src+tests found; nothing to test."
+          fi
