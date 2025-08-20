@@ -1,4 +1,5 @@
 # src/shipping_cost.py
+
 from decimal import Decimal, ROUND_HALF_UP
 
 BASE_COST = Decimal('3.50')
@@ -27,6 +28,7 @@ def calculate_shipping_cost(weight_kg):
 
 ```python
 # test_shipping_cost.py
+
 import pytest
 from decimal import Decimal
 from src.shipping_cost import calculate_shipping_cost
@@ -40,23 +42,23 @@ def test_calculate_shipping_cost():
     assert calculate_shipping_cost(10) == Decimal('15.50')
     assert calculate_shipping_cost(20) == Decimal('27.50')
     assert calculate_shipping_cost(50) == Decimal('63.50')
-    
     assert calculate_shipping_cost(0.004) == Decimal('3.50')
     assert calculate_shipping_cost(0.005) == Decimal('3.51')
-    
     assert calculate_shipping_cost(2.499) == Decimal('6.50')
     assert calculate_shipping_cost(2.500) == Decimal('6.50')
     assert calculate_shipping_cost(2.504) == Decimal('6.50')
     assert calculate_shipping_cost(2.505) == Decimal('6.51')
-    
     assert calculate_shipping_cost(0) == Decimal('3.50')
     assert calculate_shipping_cost(200) == Decimal('243.50')
 
+def test_weight_too_large():
     with pytest.raises(ValueError, match="WEIGHT_TOO_LARGE"):
         calculate_shipping_cost(200.001)
 
+def test_negative_weight():
     with pytest.raises(ValueError, match="NEGATIVE_WEIGHT"):
         calculate_shipping_cost(-0.001)
 
+def test_non_numeric_weight():
     with pytest.raises(TypeError, match="NON_NUMERIC_WEIGHT"):
         calculate_shipping_cost("1.0")
