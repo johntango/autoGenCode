@@ -131,4 +131,3 @@ jobs:
           name: junit-${{ matrix.task }}
           path: generated/${{ matrix.task }}/ci-results.xml
           if-no-files-found: ignore
-
